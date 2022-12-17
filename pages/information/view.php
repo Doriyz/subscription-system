@@ -44,33 +44,53 @@ function fetchData($tableName, $columns){
 
 
 <?php
+    global $link;
     // get the added subscription from the page
     if($_SERVER["REQUEST_METHOD"] == "POST"){
+        $gno = $_SESSION['id'];
+        $onum = 0;
+        // before adding orders, we need to get the correct ono
+        $sql = "SELECT count(ono) AS ONUM FROM Orders";
+        if($stmt = mysqli_prepare($link, $sql)){
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_store_result($stmt);
+            mysqli_stmt_bind_result($stmt, $onum);
+            mysqli_stmt_fetch($stmt);
+        }
+        // now onum is the number of total orders
+        // we need to add 1 to get the ono of a new order
+
         if(gettype($PaperInfor) != "string"){
+            // if the paper information is not empty
             foreach($PaperInfor as $row){
                 $pno = $row['pno'];
-                $addNumber = $_POST[$pno];
+                $addNumber = $_POST["number".$pno];
+                $addPeriod = $_POST["period".$pno];
                 if($addNumber != "0"){
                     // add an order to the database
-
-
-
-
-
-
-
-
-
-use a array to record the all ono, 
-then add then with an same DateTime
-
-
-
-
-
-
+                    $sql = "INSERT INTO Orders (ono, gno, pno, onumber, period) VALUES (?, ?, ?, ?, ?)";
+                    if($stmt = mysqli_prepare($link, $sql)){
+                        // bind variables
+                        mysqli_stmt_bind_param($stmt, "sssii", $param_ono, $param_gno, $param_pno, $param_onumber, $param_period);
+                        // set parameters
+                        $param_ono = $onum + 1;
+                        $param_gno = $gno;
+                        $param_pno = $row['pno'];
+                        $param_onumber = $addNumber;
+                        $param_period = $addPeriod;
+                        if(mysqli_stmt_execute($stmt)){
+                            $onum = $onum + 1;
+                            echo "Order added successfully.";
+                        }
+                        else{
+                            echo "Something went wrong. Please try again later.";
+                        }
+                        mysqli_stmt_close($stmt);
+                    }
                 }
             }
+            // jump to the pay page
+            // header("location: ../pay/pay.php");
         }
         else{
             echo '<span class="invalid-feedback"><?php echo $email_err; ?></span>';
@@ -112,6 +132,7 @@ then add then with an same DateTime
     <h1 class="my-5"><b>The Newspaper Information</b></h1>
 
     <!-- build the information table -->
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -122,7 +143,8 @@ then add then with an same DateTime
                     <th>width</th>
                     <th>height</th>
                     <th>publisher</th>
-                    <th><b>Add</b></th>
+                    <th><b>Number</b></th>
+                    <th><b>Period(months)</b></th>
                 </tr>
             </thead>
             <tbody>
@@ -143,7 +165,8 @@ then add then with an same DateTime
                         echo "<td>".$row['pwidth']."</td>";
                         echo "<td>".$row['pheight']."</td>";
                         echo "<td>".$row['ppublisher']."</td>";
-                        echo '<td><input type="number" name="'.$row['pno'].'" value="0" min="0"></td>';
+                        echo '<td><input type="number" name="'."number".$row['pno'].'" value="0" min="0" style="width: 25%; padding:0,0; margin:0,0"></td>';
+                        echo '<td><input type="number" name="'."period".$row['pno'].'" value="1" min="0" style="width: 25%;padding:0,0; margin:0,0"></td>';
                         echo "</tr>";
                     }
                 }
@@ -151,6 +174,7 @@ then add then with an same DateTime
             </tbody>
 
         </table>
-    <input type="submit" class="btn btn-primary" value="Submit">
+    <input type="submit" class="btn btn-primary" value="Submit" >
+    </form>
 </body>
 </html>
