@@ -11,9 +11,7 @@
     <link href="../styles/style.css" rel="stylesheet">
     <link href="../styles/index.css" rel="stylesheet">
     <!-- the sequence of the css files is important, the last one will overwrite the previous ones -->
-    <style>
 
-    </style>
   </head>
 
   <body>

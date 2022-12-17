@@ -12,7 +12,8 @@
   --h1-color: black;
   --h2-color: black;
   --h1-shadow-color: grey;
-  --btn-color: #005323;
+  --btn-color: #084321;
+  --btn-text-color: #ffffff;
   --btn-submit-color: #1b211cf4;
   --btn-submit-text-color: #ffffff;
 }
@@ -69,8 +70,55 @@ img {
 
 .btn-primary {
   background-color: var(--btn-color);
+  
 }
 
 button {
   color: var(--btn-color);
+
+}
+
+
+.btn-primary {
+  border: none;
+  color: var(--btn-text-color);
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 6px;
+  cursor: pointer;
+  border-radius: 30px;
+  transition-duration: 0.4s;
+}
+
+.btn-primary:hover {
+  background-color: #31adc6;
+  color: rgb(255, 255, 255);
+}
+
+.btn-primary:active {
+  background-color: #222323;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+button {
+  background-color: white; 
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 30px;
+  transition-duration: 0.4s;
+}
+
+
+input:focus {
+  background-color: rgb(242, 242, 152);
 }
