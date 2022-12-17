@@ -3,7 +3,7 @@
 <style>
     .btn-primary{
         text-decoration: none;
-        border: none;
+        /* border: none;
         padding: 5px 15px;
         text-align: center;
         text-decoration: none;
@@ -12,7 +12,7 @@
         margin: 7px 2px;
         cursor: pointer;
         border-radius: 30px;
-        transition-duration: 0.4s;
+        transition-duration: 0.4s; */
         background-color: #136d34;
         color: #ffffff;
         transition: 0.5s;
