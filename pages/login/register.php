@@ -6,7 +6,7 @@ require_once "config.php";
 $username = "";
 $password = "";
 $confirm_password = "";
-$email = "";
+$email = " "; // if email is empty, it will be set to " " in the database
 $address = "";
 $telephone = "";
 $postcode = "";
@@ -24,11 +24,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate telephone
     if(empty(trim($_POST["telephone"]))){
         $telephone_err = "Please enter a telephone.";
-    } elseif(!preg_match('/^[0-9]+$/', trim($_POST["telephone"]))){
+    } 
+    elseif(!preg_match('/^[0-9]+$/', trim($_POST["telephone"]))){
         $telephone_err = "invalid telephone.";
-    } else{
+    } 
+    else{
         // Prepare a select statement
-        $sql = "SELECT * FROM Guest WHERE telephone = ?";
+        $sql = "SELECT gtelephone AS telephone FROM Guest WHERE gtelephone = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -41,14 +43,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if(mysqli_stmt_execute($stmt)){
                 /* store result */
                 mysqli_stmt_store_result($stmt);
-                
                 if(mysqli_stmt_num_rows($stmt) == 1){
                     $telephone_err = "This telephone is already taken.";
                 } else{
                     $telephone = trim($_POST["telephone"]);
                 }
             } else{
-                echo "Oops! Something went wrong. Please try again later.";
+                echo "Fail to connect to mysql. Please try again later.";
             }
 
             // Close statement
@@ -69,47 +70,36 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate password
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter a password.";     
-    } elseif(strlen(trim($_POST["password"])) < 6){
-        $password_err = "Password must have atleast 6 characters.";
-    } else{
+    } 
+    // limit the length of password
+    // elseif(strlen(trim($_POST["password"])) < 6){
+    //     $password_err = "Password must have at least 6 characters.";
+    // } 
+    else{
         $password = trim($_POST["password"]);
     }
     
     // Validate confirm password
     if(empty(trim($_POST["confirm_password"]))){
         $confirm_password_err = "Please confirm password.";     
-    } else{
+    } 
+    else{
         $confirm_password = trim($_POST["confirm_password"]);
         if(empty($password_err) && ($password != $confirm_password)){
             $confirm_password_err = "Password did not match.";
         }
     }
     
-    // Validate email
-    if(!empty(trim($_POST["email"]))){
-        $email_err = "Please enter a email.";
-    }
-    else{
-        $email = trim($_POST["email"]);
-    }
+    // // Validate email
+    // if(!empty(trim($_POST["email"]))){
+    //     $email_err = "Please enter an email.";
+    // }
+    // else{
+    //     $email = trim($_POST["email"]);
+    // }
+    $email = trim($_POST["email"]);
 
-// Validate email address, maybe accomplish later
-//     <script type="text/javascript">
-// 	//onblur失去焦点事件，用户离开输入框时执行 JavaScript 代码：
-// 	//函数：验证邮箱格式
-//   	function isEmail(strEmail){
-//   		//定义正则表达式的变量:邮箱正则
-//   		var reg=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-//   		console.log(strEmail);
-//   		//文本框不为空，并且验证邮箱正则成功，给出正确提示
-//   		if(strEmail != null && strEmail.search(reg) != -1)
-//   		{
-//   			document.getElementById("test_user").innerHTML = "<font color='green' size='4px'>√邮箱格式正确！</font>";
-//   		}else{
-//   			document.getElementById("test_user").innerHTML = "<font color='red' size='4px'>邮箱格式错误！</font>";
-//   		}
-//   	}
-//   </script>
+
 
     // Validate address
     if(empty(trim($_POST["address"]))){
@@ -136,32 +126,48 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         && empty($address_err)
         && empty($postcode_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO Guest VALUES (?, ?, ?, ?, ?, ?, ?)";
+        // $sql = "CALL addGuest(?, ?, ?, ?, ?, ?, ?);";
+        $sql = "INSERT INTO Guest (gno, gname, gpassword, gemail, gaddress, gtelephone, gpostcode) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        // $sql = "INSERT INTO Guest VALUES (?, ?, ?, ?, ?, ?, ?);";
+        // $sql = "INSERT INTO Guest (gno, gname, gpassword, gemail, gaddress, gtelephone, gpostcode) VALUES ('3', 'test', 'test', 'test', 'test', 'test', 'test');";
+
         // the first ? is the id of the guest, which is auto-incremented
         if($stmt = mysqli_prepare($link, $sql)){
-            
 
-            // need a mysql interact here to get the id of the guest
-            $para_id = $user_id;
-            // !!!!!!!!!!!!!!!! generate the id in the config.php
-
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $para_id, $param_username, $param_password, $param_email, $param_address, $param_telephone, $param_postcode);
             
             // Set parameters
-            $param_username = $username;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_telephone = $telephone;
-            $param_email = $email;
-            $param_address = $address;
-            $param_postcode = $postcode;
+            $para_id = strval($user_id);
+            $param_username = strval( $username);
+            $param_password = strval(password_hash($password, PASSWORD_DEFAULT)); // Creates a password hash
+            $param_telephone = strval($telephone);
+            $param_email = strval($email);
+            $param_address = strval($address);
+            $param_postcode = strval($postcode);
+           
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "sssssss", 
+                $para_id, $param_username, 
+                $param_password, $param_email, 
+                $param_address, $param_telephone, 
+                $param_postcode);
+
+            // mysqli_stmt_bind_param($stmt, "sssssss",$para_id, $param_username, $param_password, $param_email, $param_address, $param_telephone, $param_postcode);
+            
+            echo $para_id;
+            echo $param_username;
+            echo $param_password;
+            echo $param_email;
+            echo $param_address;
+            echo $param_telephone;
+            echo $param_postcode;
+            
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
                 header("location: login.php");
             } else{
-                echo "Oops! Something went wrong. Please try again later.";
+                echo "Fail to add guest information. Please try again later.";
             }
 
             // Close statement
@@ -170,7 +176,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Close connection
-    mysqli_close($link);
+    // mysqli_close($link);
 }
 
   
@@ -191,7 +197,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link rel="shortcut icon" href="../../images/favicon.png" type="image/x-icon">
     <link href="../../styles/style.css" rel="stylesheet">
     <!-- <link href="../../styles/log_in.css" rel="stylesheet"> -->
-    <meta http-equiv="refresh" content="30">
+    <!-- <meta http-equiv="refresh" content="30"> -->
     <style>
         div {
             width: 400px;

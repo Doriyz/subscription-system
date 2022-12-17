@@ -26,7 +26,7 @@
   <div>
   
   <a class="btn-primary" href="./login/login.php">log in</a>
-  <a class="btn-primary" href="./login/register">register</a>
+  <a class="btn-primary" href="./login/register.php">register</a>
 
   </div>
 
