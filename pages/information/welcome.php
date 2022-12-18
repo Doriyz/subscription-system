@@ -13,7 +13,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="3">
+    <!-- <meta http-equiv="refresh" content="3"> -->
     <meta name="author" content="maysion">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Welcome</title>

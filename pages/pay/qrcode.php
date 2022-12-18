@@ -26,6 +26,12 @@
         h1{
             text-shadow: 2px 2px 4px #c9c5c9;
         }
+
+        div {
+            width: 60%;
+            margin: 40px auto;
+            text-align: center;
+        }
     </style>
     
 </head>
@@ -37,5 +43,11 @@
     <img src="/subscription-system/images/qrcode.png" alt="qrcode" width="300" height="300">
     <br><br>
     <h1 style="font-size: 30px;">Thanks for your subscription !</h1>
+
+    <?php
+    echo "<div><p>Waiting for payment...<br>The page will drump to index page after 5 seconds.</p></div>";
+    header("refresh: 5; url=../index.php");
+    ?>
+
 </body>
 </html>

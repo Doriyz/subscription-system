@@ -119,6 +119,7 @@ function fetchData($tableName, $columns){
                     if($stmt = mysqli_prepare($link, $sql)){
                         mysqli_stmt_bind_param($stmt, "ss", $para_datetime, $param_ono);
                         $para_datetime = $now;
+                        // echo $para_datetime;
                         if(mysqli_stmt_execute($stmt)){
                             echo "<br>Bill added succcessfully.<br>";
                         }

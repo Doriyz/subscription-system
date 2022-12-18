@@ -207,14 +207,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             width: 360px; 
             padding: 20px; 
             margin: 0 auto;}
+        .btn-primary{
+            height: 40px;
+            width: 120px;
+            text-align: center;
+            padding: 6px 12px;
+            margin: auto, 10px;
+            border: 1px solid #000;
+        }
     </style>
     
 </head>
 
-
-    
-
-
+  
 <body>
     <div class="wrapper">
         <h2>Sign Up</h2>
@@ -258,7 +263,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
-                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                <!-- <input type="reset" class="btn btn-secondary ml-2" value="Reset"> -->
+                <input type="reset" class="btn btn-primary" value="Reset" style="background-color: gray; width: 100px">
             </div>
             <p>Already have an account? <a href="login.php">Login here</a>.</p>
         </form>

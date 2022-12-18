@@ -26,6 +26,7 @@ require_once "../login/config.php";
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="shortcut icon" href="../../images/favicon.png" type="image/x-icon">
     <link href="../../styles/style.css" rel="stylesheet">
+   
     <!-- <link href="../../styles/log_in.css" rel="stylesheet"> -->
     <!-- <meta http-equiv="refresh" content="30"> -->
     <style>

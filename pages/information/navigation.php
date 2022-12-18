@@ -16,6 +16,8 @@
         background-color: #136d34;
         color: #ffffff;
         transition: 0.5s;
+        margin: 12px;
+        width: 350px;
     }
 
     .btn-primary:hover{
@@ -23,8 +25,20 @@
         background-color: #004397;
         color: #ffffff;
     }
+
+    .btn-secondary{
+        background-color: #457055;
+    }
+
+    .btn-third{
+        background-color: #003d14;
+    }
+
 </style>
 
-<a href="/subscription-system/pages/information/view.php" class="btn-primary">View and Subscribe Newspaper</a><br>
-<a href="/subscription-system/pages/login/reset-password.php" class="btn-primary">Reset Your Password</a><br>
-<a href="/subscription-system/pages/login/logout.php" class="btn-primary">Sign Out of Your Account</a>
+
+<a href="/subscription-system/pages/information/view.php" class="btn-primary btn-third">View and Subscribe Newspaper</a><br>
+<a href="/subscription-system/pages/information/personalInfo.php" class="btn-primary">View Your Information</a><br>
+<a href="/subscription-system/pages/information/personalBills.php" class="btn-primary">View Your Bills</a><br>
+<a href="/subscription-system/pages/login/reset-password.php" class="btn-primary btn-secondary" >Reset Your Password</a><br>
+<a href="/subscription-system/pages/login/logout.php" class="btn-primary btn-secondary">Sign Out of Your Account</a><br>
