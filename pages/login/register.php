@@ -213,14 +213,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             text-align: center;
             padding: 6px 12px;
             margin: auto, 10px;
-            border: 1px solid #000;
         }
+        
     </style>
     
 </head>
 
   
 <body>
+    <!-- add button to return last page or homepage -->
+    <?php include '../icon.php'; ?>
+    <?php //include '/subscription-system/pages/icon.php'; ?>
+
+
     <div class="wrapper">
         <h2>Sign Up</h2>
         <p>Please fill this form to create an account.</p>

@@ -169,12 +169,19 @@ function fetchData($tableName, $columns){
             width: 360px; 
             padding: 20px; 
             margin: 0 auto;}
+        .wrapper2{
+            text-align: left;
+            display: inline;
+        }
     </style>
     
 </head>
 
 
 <body>
+    <div class = "wrapper2">
+    <?php include '../icon_loginned.php'; ?>
+    </div>
     <h1 class="my-5"><b>The Newspaper Information</b></h1>
 
     <!-- build the information table -->

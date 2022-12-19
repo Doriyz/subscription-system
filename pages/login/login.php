@@ -121,6 +121,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </style>
 </head>
 <body>
+    <?php include '../icon.php'; ?>
     <div class="wrapper">
         <h2>Log in</h2>
         <p>Please fill in your credentials to login.</p>
