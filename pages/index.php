@@ -25,6 +25,7 @@
   
   <a class="btn-primary" href="./login/login.php">log in</a>
   <a class="btn-primary" href="./login/register.php">register</a>
+  <a class="btn-primary" href="./manager/login.php" title="only availble for manager">manage</a>
 
   </div>
 
