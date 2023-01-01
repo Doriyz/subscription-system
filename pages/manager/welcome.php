@@ -1,4 +1,6 @@
 <?php
+ini_set( 'include_path', 'D:\Apache64\httpd-2.4.54-win64-VS17\Apache24\htdocs\subscription-system' );
+
 // Initialize the session
 session_start();
  

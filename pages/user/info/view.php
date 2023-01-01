@@ -1,10 +1,14 @@
 <?php
+include "../../refresh.php";
+?>
+
+<?php
 // Initialize the session
 session_start();
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
+    header("location: ../login/login.php");
     exit;
 }
 
@@ -99,13 +103,6 @@ function fetchData($tableName, $columns){
                         $param_period = $addPeriod;
                         if(mysqli_stmt_execute($stmt)){
                             array_push($Orders, $param_ono);
-                            
-                            // // print the content of Orders
-                            // echo "Orders: ";
-                            // foreach($Orders as $order){
-                            //     echo $order." ";
-                            // }   
-
                             $onum = $onum + 1;
                             echo "Order added successfully.";
                         }
@@ -135,7 +132,7 @@ function fetchData($tableName, $columns){
                 header("location: ../pay/pay.php");
             }
             else{
-                echo "do not add any subscription";
+                echo "<span>do not add any subscription</span";
             }
         }
         else{
@@ -154,35 +151,96 @@ function fetchData($tableName, $columns){
     <meta name="author" content="maysion">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Welcome</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="shortcut icon" href="../../images/favicon.png" type="image/x-icon">
-    <link href="../../styles/style.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+    <link rel="shortcut icon" href="../../../images/favicon.png" type="image/x-icon">
+    <link href="../../../styles/style.css" rel="stylesheet">
     <!-- <link href="../../styles/log_in.css" rel="stylesheet"> -->
     <!-- <meta http-equiv="refresh" content="30"> -->
     <style>
         div {
             width: 400px;
         }
-        body{ font: 14px sans-serif;
-            text-align: center;}
+        body{
+            padding-bottom: 50px;
+        }
         .wrapper{ 
             width: 360px; 
             padding: 20px; 
-            margin: 0 auto;}
+            margin: 0 auto;
+        }
         .wrapper2{
             text-align: left;
             display: inline;
         }
-    </style>
+
+        table {
+            width: auto;
+            height: auto;
+            line-height: 33px;
+            text-align: center;
+            padding: 2px;
+            border-radius: 1em;
+            overflow: hidden;
+            margin: 0 auto;
+            font-size: 17px;
+        }
+
+        table tr th{
+            background-color: #B5D5C5;
+            color: #002a00;
+            font-size: 20px;
+            line-height: 40px;
+        }
+        table tr th, table tr td{
+            padding: 5px 10px;
+        }
+
+        th, td {
+            padding: 1em;
+            background: #F5F5DC;
+            border-bottom: 1px solid white;
+
+        }
+
+        input[type="number"]{
+            text-align: center;
+            font-size: 18px;
+        }
+        input[type="submit"]{
+            margin-top: 2%;
+            margin-left: 45%;
+        }
+
+        .icon{
+            width: 35px;
+            height: 35px;
+            margin: 10px 10px;
+            text-decoration: none;
+            font-size: large;
+            display: inline-block;
+            text-align: left;
+        }
+        .icon:hover{
+            text-decoration: none;
+        }
+
+        span {
+            color: red;
+            font-size: 20px;
+        }
+</style>
     
 </head>
 
 
 <body>
-    <div class = "wrapper2">
-    <?php include '../icon_loginned.php'; ?>
+    <div>
+        <!-- add a icon to jump to homepage -->
+        <a href="javascript:history.back()" title="return back"><img src="/subscription-system/images/return.png" class="icon"></img></a>
+        <a href="/subscription-system/pages/information/welcome.php" title="jump to home page"><img src="/subscription-system/images/homeicon.png" class="icon"></img></a>
     </div>
-    <h1 class="my-5"><b>The Newspaper Information</b></h1>
+    <div class="wrapper2">
+    <h1><b>view and purchase</b></h1>
 
     <!-- build the information table -->
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
@@ -230,10 +288,9 @@ function fetchData($tableName, $columns){
             </tbody>
 
         </table>
-
-    <!-- move this button to check and pay page so that we will not change the database before pay -->
     <input type="submit" class="btn btn-primary" value="Submit" >
-    
+    </div>
+
 </form>
 </body>
 </html>

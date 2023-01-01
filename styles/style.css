@@ -22,7 +22,6 @@
 
 html {
   font-size: 10px;
-  font-family: 'Open Sans', sans-serif;
   background-attachment: fixed;
 }
 
@@ -46,6 +45,11 @@ html {
 
 body {
   background: var(--body-bg-color);
+  padding-top: 3%;  
+  padding-left: 3%;
+  padding-right: 3%;
+  font-family: 'bell MT';
+
 }
 
 p, li {
@@ -57,10 +61,13 @@ p, li {
 body {
   width: 80%;
   margin: 0 auto;
-  padding: 0 20px 20px 20px;
   border: 5px solid black;
   border-radius: 10px;
-  margin-top: 5%;
+  margin-top: 3%;
+  padding-top: 3%;  
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-bottom: 100px;
 }
 
 img {
@@ -75,7 +82,6 @@ img {
 
 button {
   color: var(--btn-color);
-
 }
 
 
@@ -121,4 +127,60 @@ button {
 
 input:focus {
   background-color: rgb(242, 242, 152);
+}
+
+.center { 
+  padding-top:3% ;
+  display: flex;
+  justify-content: center;
+} 
+
+.icon{
+  width: 35px;
+  height: 35px;
+  margin: 10px 10px;
+  text-decoration: none;
+  font-size: large;
+  display: inline-block;
+  text-align: left;
+}
+.icon:hover{
+text-decoration: none;
+}
+
+
+table {
+  width: auto;
+  height: auto;
+  line-height: 33px;
+  text-align: center;
+  padding: 2px;
+  border-radius: 1em;
+  overflow: hidden;
+  margin: 0 auto;
+  font-size: 17px;
+}
+
+table tr th{
+  background-color: #B5D5C5;
+  color: #002a00;
+  font-size: 20px;
+  line-height: 40px;
+}
+table tr th, table tr td{
+  padding: 5px 10px;
+}
+
+th, td {
+  padding: 1em;
+  background: #F5F5DC;
+  border-bottom: 1px solid white;
+}
+
+span {
+  color: red;
+}
+
+.blank-top{
+  padding-top: 5%;
 }

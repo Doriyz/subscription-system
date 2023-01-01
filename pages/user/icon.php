@@ -1,5 +1,4 @@
 
-
 <?php
 // include this file in the pages you want to add the icon
 // include 'subscription-system/pages/icon.php';

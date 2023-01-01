@@ -1,10 +1,14 @@
 <?php
+include "../../refresh.php";
+?>
+
+<?php
 // Initialize the session
 session_start();
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
+    header("location: ../login/login.php");
     exit;
 }
 
@@ -19,65 +23,85 @@ require_once "../login/config.php";
 <html>
   <head>
     <meta charset="utf-8">
-    <!-- <meta http-equiv="refresh" content="3"> -->
     <meta name="author" content="maysion">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Personal Bills</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="shortcut icon" href="../../images/favicon.png" type="image/x-icon">
-    <link href="../../styles/style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../../../images/favicon.png" type="image/x-icon">
+    <link href="../../../styles/style.css" rel="stylesheet">
     <style>
-        /* h2 {
-            color: blue;
-            text-align: right;
-            text-shadow: none;
-            font-size: 30px;
-        } */
-
+        body{
+            padding-bottom: 100px;
+        }
         .btn-primary{
             font-size: large;
-            border-radius: 20px;
-            height: 55px;
-            width: 200px;
+            border-radius: 15px;
+            width: 100px;
+            height: 30px;
+            padding: 10px;
             background-color: #794a9a;
+            display: block;
+            margin: 0 auto;
+            text-shadow: none;
+            text-align: center;
         }
         .btn-primary:hover{
             background-color: #ac3d6a;
         }
 
-        .price{
-        text-align: right;
-        text-shadow: none;
-        font-size: 30px;
-        border-color: #ac3d6a;
-        border: lightblue;
-        padding: 5px 15px;
-        text-align: right;
-        text-decoration: none;
-        margin: 7px 2px;
-        transition-duration: 0.4s;
-        color: #136d34;
-    }
 
-    </style>
-    <style>
-        
-        body{ font: 14px sans-serif;
-            text-align: center;}
+        table {
+            height: auto;
+            line-height: 33px;
+            text-align: center;
+            padding: 2px;
+            border-radius: 1em;
+            overflow: hidden;
+            margin: 0 auto;
+            font-size: 17px;
+        }
+       
+        table tr th, table tr td{
+            padding: 5px 10px;
+            width: 150px;
+        }
+        table tr th{
+            background-color: #B5D5C5;
+            color: #002a00;
+            font-size: 18px;
+            line-height: 38px;
+            width: 150px;
+        }
+        th, td {
+            padding: 1em;
+            background: #F5F5DC;
+            border-bottom: 1px solid white;
+        }
+
+        .price{
+            text-shadow:  3px 3px 1px rgb(187, 187, 187);
+            font-size: 30px;
+            font-weight: bold;
+            text-align: right;
+            color: #136d34;
+            margin-right: 10%;
+        }
+
+
         .wrapper{ 
-            width: 500px; 
-            padding: 20px; 
+            padding: 15px 10px 0 0; 
             margin: 0 auto;
             font-size: 50px;
+            text-align: center;
         }
- 
+        
     </style>
-    
+
 </head>
 
 
 <body>
-    <h1 class="my-5"><b>Your Bills</b></h1>
+    <div class="wrapper">
+    <h1><b>Your Bills</b></h1>
 
     <!-- get the bills' datetime -->
     <?php
@@ -153,14 +177,14 @@ require_once "../login/config.php";
             echo "</tbody>";
             echo "</table>";
             // print the total price of this bill
-            echo "<h2 class='price'>Total Price: ".$total_price."</h2>";
+            echo "<p class='price'>Total Price: ".$total_price."</h2>";
         }
     }
 
     ?>
+    <br></br>
+    </div>
+    <a href="../welcome.php" class="btn btn-primary">Back</a>
 
-
-    
-   <a href="welcome.php" class="btn btn-primary">Back</a>
 </body>
 </html>

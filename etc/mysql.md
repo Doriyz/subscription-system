@@ -196,5 +196,14 @@ where gno = '8';
 select * from Bill natural join Orders natural join Paper
 where btime = "2022-12-17 16:14:08";
 
+
+# add manager
+create table Manager(
+    mno int auto_increment primary key ,
+    mname varchar(20) not null ,
+    mpassword varchar(20) not null
+);
+
+insert into Manager(mname, mpassword) values ('manager','manager');
 ```
 

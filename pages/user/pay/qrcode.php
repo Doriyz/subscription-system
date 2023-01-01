@@ -1,3 +1,7 @@
+<?php
+include "../../refresh.php";
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,9 +10,8 @@
     <meta name="author" content="maysion">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Check and Pay</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="shortcut icon" href="../../images/favicon.png" type="image/x-icon">
-    <link href="../../styles/style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../../../images/favicon.png" type="image/x-icon">
+    <link href="../../../styles/style.css" rel="stylesheet">
     <!-- <link href="../../styles/log_in.css" rel="stylesheet"> -->
     <!-- <meta http-equiv="refresh" content="30"> -->
     <!-- <style>
@@ -46,7 +49,7 @@
 
     <?php
     echo "<div><p>Waiting for payment...<br>The page will drump to index page after 5 seconds.</p></div>";
-    header("refresh: 5; url=../index.php");
+    header("refresh: 5; url=../welcome.php");
     ?>
 
 </body>

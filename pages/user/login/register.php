@@ -1,4 +1,8 @@
 <?php
+include "../../refresh.php";
+?>
+
+<?php
 // Include config file
 require_once "config.php";
  
@@ -174,13 +178,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_stmt_close($stmt);
         }
     }
-    
-    // Close connection
-    // mysqli_close($link);
 }
-
-  
-        
 
 ?>
  
@@ -189,42 +187,73 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html>
   <head>
     <meta charset="utf-8">
-    <!-- <meta http-equiv="refresh" content="3"> -->
     <meta name="author" content="maysion">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="shortcut icon" href="../../images/favicon.png" type="image/x-icon">
-    <link href="../../styles/style.css" rel="stylesheet">
-    <!-- <link href="../../styles/log_in.css" rel="stylesheet"> -->
-    <!-- <meta http-equiv="refresh" content="30"> -->
+    <link rel="shortcut icon" href="../../../images/favicon.png" type="image/x-icon">
+    <link href="../../../styles/style.css" rel="stylesheet">
     <style>
         div {
             width: 400px;
         }
         body{ font: 14px sans-serif; }
         .wrapper{ 
-            width: 360px; 
+            width: 400px; 
             padding: 20px; 
             margin: 0 auto;}
-        .btn-primary{
-            height: 40px;
-            width: 120px;
-            text-align: center;
-            padding: 6px 12px;
-            margin: auto, 10px;
-        }
         
+        input {
+            margin-top: 1%;
+            margin-bottom: 3%;
+            width: 100%;
+            height: 25px;
+            padding: 2px;
+            font-size: 15px;
+        }
+        label {
+            font-family: "corebell";
+            font-size: 20px;
+        }
+        p {
+            font-family: "bell MT";
+            font-size: 20px;
+        }
+        .icon{
+            width: 35px;
+            height: 35px;
+            margin: 10px 10px;
+            text-decoration: none;
+            font-size: large;
+            display: inline-block;
+            text-align: left;
+        }
+        .icon:hover{
+        text-decoration: none;
+        }
+        .btn {
+            font-size: 18px;
+            vertical-align: middle;
+            padding: 10px 20px;
+            border-radius: 10px;
+            width: 120px;
+            height: 40px;
+        }
+        span {
+            font-family: "corebell";
+            font-size: 15px;
+            color: red;
+        }
     </style>
     
 </head>
 
   
 <body>
-    <!-- add button to return last page or homepage -->
-    <?php include '../icon.php'; ?>
-    <?php //include '/subscription-system/pages/icon.php'; ?>
-
+    <div>
+    <!-- add a icon to jump to homepage -->
+    <a href="javascript:history.back()" title="return back"><img src="/subscription-system/images/return.png" class="icon"></img></a>
+    <a href="../../index.php" title="jump to home page"><img src="/subscription-system/images/homeicon.png" class="icon"></img></a>
+    </div>
 
     <div class="wrapper">
         <h2>Sign Up</h2>

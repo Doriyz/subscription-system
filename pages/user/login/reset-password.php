@@ -1,6 +1,15 @@
 <?php
+include "../../refresh.php";
+?>
+
+
+
+<?php
 // Initialize the session
 session_start();
+
+// Include config file
+require_once "config.php";
  
 // Check if the user is logged in, otherwise redirect to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
@@ -8,9 +17,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
  
-// Include config file
-require_once "config.php";
- 
+
 // Define variables and initialize with empty values
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
@@ -54,6 +61,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if(mysqli_stmt_execute($stmt)){
                 // Password updated successfully. Destroy the session, and redirect to login page
                 session_destroy();
+                // echo "<span>Password updated successfully. Please login again.</span>";
                 header("location: login.php");
                 exit();
             } else{
@@ -70,6 +78,87 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 ?>
  
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="maysion">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <link rel="shortcut icon" href="../../../images/favicon.png" type="image/x-icon">
+    <link href="../../../styles/style.css" rel="stylesheet">
+    <style>
+ 
+        .wrapper{ 
+            width: 600px; 
+            padding: 30px 150px; 
+            margin: 0 auto;
+        }
+        p {
+            font-family: "bell MT";
+            font-size: 25px;
+            text-align: center;
+        }
+        input {
+            margin-top: 1%;
+            width: 100%;
+            height: 35px;
+            padding: 2px;
+            font-size: 25px;
+        }
+        label {
+            font-family: "corebell";
+            font-size: 20px;
+        }
+        .btn-primary{
+            font-size: large;
+            border-radius: 15px;
+            width: 80px;
+        }
+        input[type="submit"]{
+            height: auto;
+            width: 200px;
+       }
+       span {
+        color: red;
+        display: block;
+       }
+        .table {
+        margin-top: 3%;
+        margin-bottom: 3%;
+        }
+</style>
+   
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Reset Password</h1>
+        <p>Please fill in this form to reset your password.</p>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
+            <div class="table">
+            <label>New Password</label>
+            <input type="password" name="new_password" <?php echo (!empty($new_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $new_password; ?>">
+            <span><?php echo $new_password_err; ?></span>
+            </div>
+            <div class="table">
+            <label>Confirm Password</label>
+            <input type="password" name="confirm_password"  <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>">
+            <span><?php echo $confirm_password_err; ?></span>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Submit">
+            <a class="btn btn-primary" href="../welcome.php" style="background-color:gray">Cancel</a>
+        </form>
+
+    </div>    
+    
+</body>
+</html> -->
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
