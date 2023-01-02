@@ -4,19 +4,19 @@ include "../../../refresh.php";
 
 <?php
 // Check existence of id parameter before processing further
-if(isset($_GET["pno"]) && !empty(trim($_GET["pno"]))){
+if(isset($_GET["gno"]) && !empty(trim($_GET["gno"]))){
     // Include config file
     require_once "../../login/config.php";
     
     // Prepare a select statement
-    $sql = "SELECT * FROM Paper WHERE pno = ?";
+    $sql = "SELECT * FROM Guest WHERE gno = ?";
     
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
         mysqli_stmt_bind_param($stmt, "s", $param_id);
         
         // Set parameters
-        $param_id = trim($_GET["pno"]);
+        $param_id = trim($_GET["gno"]);
         
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
@@ -28,12 +28,11 @@ if(isset($_GET["pno"]) && !empty(trim($_GET["pno"]))){
                 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 
                 // Retrieve individual field value
-                $name = $row["pname"];
-                $price = $row["pprice"];
-                $frequency = $row["frequency"];
-                $width = $row["pwidth"];
-                $height = $row["pheight"];
-                $publisher = $row["ppublisher"];
+                $name = $row["gname"];
+                $email = $row["gemail"];
+                $address = $row["gaddress"];
+                $telephone = $row["gtelephone"];
+                $postcode = $row["gpostcode"];
             } else{
                 header("location: error.php");
                 exit();
@@ -112,37 +111,35 @@ if(isset($_GET["pno"]) && !empty(trim($_GET["pno"]))){
 </head>
 <body>
     <div>
-    <h1>View Paper Info</h1>
+    <h1>View Guest Info</h1>
     </div>
     <div class="wrapper">
         <table>
             <tr>
                 <th>Name</th>
-                <td><?php echo $row["pname"]; ?></td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td><?php echo $row["pprice"]; ?></td>
-            </tr>
-            <tr>
-                <th>Frequency</th>
-                <td><?php echo $row["frequency"]; ?></td>
-            </tr>
-
-            <tr>
-                <th>Width</th>
-                <td><?php echo $row["pwidth"]; ?></td>
-            </tr>
-
-            <tr>
-                <th>Height</th>
-                <td><?php echo $row["pheight"]; ?></td>
+                <td><?php echo $row["gname"]; ?></td>
             </tr>
             
             <tr>
-                <th>Publisher</th>
-                <td><?php echo $row["ppublisher"]; ?></td>
+                <th>Email</th>
+                <td><?php echo $row["gemail"]; ?></td>
             </tr>
+
+            <tr>
+                <th>Address</th>
+                <td><?php echo $row["gaddress"]; ?></td>
+            </tr>
+
+            <tr>
+                <th>Telephone</th>
+                <td><?php echo $row["gtelephone"]; ?></td>
+            </tr>
+
+            <tr>
+                <th>Postcode</th>
+                <td><?php echo $row["gpostcode"]; ?></td>
+            </tr>
+            
         </table>
     </div>
     <div class="wrapper">

@@ -4,19 +4,19 @@ include "../../../refresh.php";
 
 <?php
 // Check existence of id parameter before processing further
-if(isset($_GET["pno"]) && !empty(trim($_GET["pno"]))){
+if(isset($_GET["ono"]) && !empty(trim($_GET["ono"]))){
     // Include config file
     require_once "../../login/config.php";
     
     // Prepare a select statement
-    $sql = "SELECT * FROM Paper WHERE pno = ?";
+    $sql = "SELECT * FROM Orders natural join Bill WHERE ono = ?";
     
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
         mysqli_stmt_bind_param($stmt, "s", $param_id);
         
         // Set parameters
-        $param_id = trim($_GET["pno"]);
+        $param_id = trim($_GET["ono"]);
         
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
@@ -28,14 +28,13 @@ if(isset($_GET["pno"]) && !empty(trim($_GET["pno"]))){
                 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 
                 // Retrieve individual field value
-                $name = $row["pname"];
-                $price = $row["pprice"];
-                $frequency = $row["frequency"];
-                $width = $row["pwidth"];
-                $height = $row["pheight"];
-                $publisher = $row["ppublisher"];
+                $gno = $row["gno"];
+                $pno = $row["pno"];
+                $onumber = $row["onumber"];
+                $period = $row["period"];
+                $btime = $row["btime"];
             } else{
-                header("location: error.php");
+                // header("location: error.php");
                 exit();
             }
         } else{
@@ -44,7 +43,7 @@ if(isset($_GET["pno"]) && !empty(trim($_GET["pno"]))){
     }
     mysqli_stmt_close($stmt);
 } else{
-    header("location: error.php");
+    // header("location: error.php");
     exit();
 }
 ?>
@@ -117,32 +116,26 @@ if(isset($_GET["pno"]) && !empty(trim($_GET["pno"]))){
     <div class="wrapper">
         <table>
             <tr>
-                <th>Name</th>
-                <td><?php echo $row["pname"]; ?></td>
+                <th>Guest ID</th>
+                <td><?php echo $row["gno"]; ?></td>
             </tr>
             <tr>
-                <th>Price</th>
-                <td><?php echo $row["pprice"]; ?></td>
+                <th>Paper ID</th>
+                <td><?php echo $row["pno"]; ?></td>
             </tr>
             <tr>
-                <th>Frequency</th>
-                <td><?php echo $row["frequency"]; ?></td>
+                <th>Order Number</th>
+                <td><?php echo $row["onumber"]; ?></td>
             </tr>
-
             <tr>
-                <th>Width</th>
-                <td><?php echo $row["pwidth"]; ?></td>
+                <th>Period</th>
+                <td><?php echo $row["period"]; ?></td>
             </tr>
-
             <tr>
-                <th>Height</th>
-                <td><?php echo $row["pheight"]; ?></td>
+                <th>Bill Time</th>
+                <td><?php echo $row["btime"]; ?></td>
             </tr>
             
-            <tr>
-                <th>Publisher</th>
-                <td><?php echo $row["ppublisher"]; ?></td>
-            </tr>
         </table>
     </div>
     <div class="wrapper">

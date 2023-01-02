@@ -1,3 +1,3 @@
 <?php 
-// echo '<meta http-equiv="refresh" content="5">'
+// echo '<meta http-equiv="refresh" content="1">'
 ?>

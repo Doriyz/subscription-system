@@ -9,7 +9,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     require_once "../../login/config.php";
     
     // Prepare a delete statement
-    $sql = "DELETE FROM Paper WHERE pno = ?";
+    $sql = "DELETE FROM Guest WHERE gno = ?";
     
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -35,7 +35,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     mysqli_close($link);
 } else{
     // Check existence of id parameter
-    if(empty(trim($_GET["pno"]))){
+    if(empty(trim($_GET["gno"]))){
         // URL doesn't contain id parameter. Redirect to error page
         header("location: error.php");
         exit();
@@ -74,8 +74,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     <div class="wrapper">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="alert alert-danger">
-                <input type="hidden" name="id" value="<?php echo trim($_GET["pno"]); ?>"/>
-                <p>Are you sure you want to delete this Newspaper record?</p>
+                <input type="hidden" name="id" value="<?php echo trim($_GET["gno"]); ?>"/>
+                <p>Are you sure you want to delete this Guest record?</p>
                 <p>
                     <input type="submit" value="Yes" class="btn btn-danger">
                     <a href="main.php" class="btn btn-secondary">No</a>

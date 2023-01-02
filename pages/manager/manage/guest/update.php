@@ -8,16 +8,14 @@ include "../../../refresh.php";
 require_once "../../login/config.php";
  
 // Define variables and initialize with empty values
-$name  = $publisher = "";
-$price = $frequency = $width = $height = 0;
-$name_err = $price_err = $frequency_err = $width_err = $height_err = $publisher_err = "";
- 
+$name  = $email = $address = $telephone = $postcode = "";
+$name_err = $email_err = $address_err = $telephone_err = $postcode_err = "";
+
 // Processing form data when form is submitted
-if(isset($_POST["pno"]) && !empty($_POST["pno"])){
+if(isset($_POST["gno"]) && !empty($_POST["gno"])){
     // Get hidden input value
-    $pno = $_POST["pno"];
+    $gno = $_POST["gno"];
     
-    // Validate name
     $input_name = trim($_POST["name"]);
     if (empty($input_name)) {
         $name_err = "Please enter a name.";
@@ -26,46 +24,43 @@ if(isset($_POST["pno"]) && !empty($_POST["pno"])){
         $name = $input_name;
     }
     
-    // Validate price
-    $input_price = trim($_POST["price"]);
-    if(empty($input_price)){
-        $price_err = "Please enter the price amount.";     
+    $input_email = trim($_POST["email"]);
+    if(empty($input_email)){
+        $email_err = "Please enter the email amount.";     
     } 
     else{
-        $price = $input_price;
+        $email = $input_email;
     }
 
-    // Validate frequency
-    $input_frequency = trim($_POST["frequency"]);
-    if(empty($input_frequency)){
-        $frequency_err = "Please enter the frequency amount.";     
-    } elseif(!ctype_digit($input_frequency)){
-        $frequency_err = "Please enter a positive integer value.";
-    } else{
-        $frequency = $input_frequency;
+    $input_address = trim($_POST["address"]);
+    if(empty($input_address)){
+        $address_err = "Please enter the address amount.";     
+    } 
+    else{
+        $address = $input_address;
     }
 
-    $input_width = trim($_POST["width"]);
-    if(!empty($input_width)){
-        $width = $input_width;
+    $input_telephone = trim($_POST["telephone"]);
+    if(empty($input_telephone)){
+        $telephone_err = "Please enter the telephone amount.";     
+    } 
+    else{
+        $telephone = $input_telephone;
     }
 
-    $input_height = trim($_POST["height"]);
-    if(!empty($input_height)){
-        $height = $input_height;
+    $input_postcode = trim($_POST["postcode"]);
+    if(!empty($input_postcode)){
+        $postcode = $input_postcode;
     }
 
-    $input_publisher = trim($_POST["publisher"]);
-    if(!empty($input_publisher)){
-        $publisher = $input_publisher;
-    }
+
     
     if(empty($name_err) && empty($price_err) && empty($frequency_err)){
-        $sql = "UPDATE Paper SET pname=?, pprice=?, frequency=?, pwidth=?, pheight=?, ppublisher=? WHERE pno=?";
+        $sql = "UPDATE Guest SET gname=?, gemail=?, gaddress=?, gtelephone=?, gpostcode=? WHERE gno=?";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssssss", $name, $price, $frequency, $width, $height, $publisher, $pno);
+            mysqli_stmt_bind_param($stmt, "ssssss", $name, $email, $address, $telephone, $postcode, $gno);
 
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -75,20 +70,6 @@ if(isset($_POST["pno"]) && !empty($_POST["pno"])){
             } else{
                 // print the error message
                 echo mysqli_stmt_error($stmt);
-                echo "<br>";
-                //print the parameter
-                echo $name;
-                echo "<br>";
-                echo $price;
-                echo "<br>";
-                echo $frequency;
-                echo "<br>";
-                echo $width;
-                echo "<br>";
-                echo $height;
-                echo "<br>";
-                echo $publisher;
-                echo "<br>";
                 echo "Oops! Something went wrong. Please try again later.";
             }
         }
@@ -98,15 +79,15 @@ if(isset($_POST["pno"]) && !empty($_POST["pno"])){
     
 } else{
     // Check existence of id parameter before processing further
-    if(isset($_GET["pno"]) && !empty(trim($_GET["pno"]))){
+    if(isset($_GET["gno"]) && !empty(trim($_GET["gno"]))){
         // Get URL parameter
-        $pno =  trim($_GET["pno"]);
+        $gno =  trim($_GET["gno"]);
         
         // Prepare a select statement
-        $sql = "SELECT * FROM Paper WHERE pno = ?";
+        $sql = "SELECT * FROM Guest WHERE gno = ?";
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $pno);
+            mysqli_stmt_bind_param($stmt, "s", $gno);
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -118,12 +99,11 @@ if(isset($_POST["pno"]) && !empty($_POST["pno"])){
                     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                     
                     // Retrieve individual field value
-                    $name = $row["pname"];
-                    $price = $row["pprice"];
-                    $frequency = $row["frequency"];
-                    $width = $row["pwidth"];
-                    $height = $row["pheight"];
-                    $publisher = $row["ppublisher"];
+                    $name = $row["gname"];
+                    $email = $row["gemail"];
+                    $address = $row["gaddress"];
+                    $telephone = $row["gtelephone"];
+                    $postcode = $row["gpostcode"];
                 } 
                 else{
                     // URL doesn't contain valid id. Redirect to error page
@@ -233,7 +213,7 @@ if(isset($_POST["pno"]) && !empty($_POST["pno"])){
 <body>
     <div class="wrapper">
         <h1>Update Record</h1>
-        <p>Please edit the input values and submit to update the Newspaper record.</p>
+        <p>Please edit the input values and submit to update the Guest record.</p>
     </div>
     <div class="wrapper">        
         <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
@@ -247,48 +227,39 @@ if(isset($_POST["pno"]) && !empty($_POST["pno"])){
                 </tr>
                
                 <tr>
-                    <th>price</th>
+                    <th>Email</th>
                     <td>
-                        <input type="number" step="0.1" name="price" class="<?php echo (!empty($price_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $price; ?>">
-                        <span class="invalid-feedback"><?php echo $price_err;?></span>
+                        <input type="text" name="email" class="<?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
+                        <span class="invalid-feedback"><?php echo $email_err;?></span>
                     </td>
                 </tr>
 
                 <tr>
-                    <th>frequency</th>
+                    <th>Address</th>
                     <td>
-                        <input type="number" name="frequency" class="<?php echo (!empty($frequency_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $frequency; ?>">
-                        <span class="invalid-feedback"><?php echo $frequency_err;?></span>
+                        <input type="text" name="address" class="<?php echo (!empty($address_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $address; ?>">
+                        <span class="invalid-feedback"><?php echo $address_err;?></span>
                     </td>
                 </tr>
 
                 <tr>
-                    <th>width</th>
+                    <th>Telephone</th>
                     <td>
-                        <input type="number" name="width" class="<?php echo (!empty($width_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $width; ?>">
-                        <span class="invalid-feedback"><?php echo $width_err;?></span>
+                        <input type="text" name="telephone" class="<?php echo (!empty($telephone_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $telephone; ?>">
+                        <span class="invalid-feedback"><?php echo $telephone_err;?></span>
                     </td>
                 </tr>
 
                 <tr>
-                    <th>height</th>
+                    <th>Postcode</th>
                     <td>
-                        <input type="number" name="height" class="<?php echo (!empty($height_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $height; ?>">
-                        <span class="invalid-feedback"><?php echo $height_err;?></span>
-                    </td>
+                        <input type="text" name="postcode" class="<?php echo (!empty($postcode_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $postcode; ?>">
+                        <span class="invalid-feedback"><?php echo $postcode_err;?></span>
                 </tr>
-
-                <tr>
-                    <th>publisher</th>
-                    <td>
-                        <input type="text" name="publisher" class="<?php echo (!empty($publisher_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $publisher; ?>">
-                        <span class="invalid-feedback"><?php echo $publisher_err;?></span>
-                    </td>
-                </tr>
-
             </table>    
 
-            <input type="hidden" name="pno" value="<?php echo $_GET["pno"]; ?>"/>
+
+            <input type="hidden" name="gno" value="<?php echo $_GET["gno"]; ?>"/>
             <div>
             <input type="submit" class="btn btn-primary" value="Submit">
             <a href="main.php" class="btn btn-secondary">Cancel</a>

@@ -17,7 +17,7 @@ else {
     // define user_id
     $user_id = 0;
 
-    $sql = "SELECT count(gno) FROM Guest";
+    $sql = "SELECT MAX(gno) FROM Guest";
     $stmt = mysqli_prepare($link, $sql);
     if($stmt) {
         if(mysqli_stmt_execute($stmt)){
@@ -34,8 +34,5 @@ else {
     }
     mysqli_stmt_close($stmt);
 }
-
-ini_set( 'include_path', 'D:\Apache64\httpd-2.4.54-win64-VS17\Apache24\htdocs\subscription-system' );
-
 
 ?>

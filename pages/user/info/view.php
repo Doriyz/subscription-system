@@ -147,15 +147,11 @@ function fetchData($tableName, $columns){
 <html>
   <head>
     <meta charset="utf-8">
-    <!-- <meta http-equiv="refresh" content="3"> -->
     <meta name="author" content="maysion">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Welcome</title>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <link rel="shortcut icon" href="../../../images/favicon.png" type="image/x-icon">
     <link href="../../../styles/style.css" rel="stylesheet">
-    <!-- <link href="../../styles/log_in.css" rel="stylesheet"> -->
-    <!-- <meta http-equiv="refresh" content="30"> -->
     <style>
         div {
             width: 400px;
@@ -237,7 +233,7 @@ function fetchData($tableName, $columns){
     <div>
         <!-- add a icon to jump to homepage -->
         <a href="javascript:history.back()" title="return back"><img src="/subscription-system/images/return.png" class="icon"></img></a>
-        <a href="/subscription-system/pages/information/welcome.php" title="jump to home page"><img src="/subscription-system/images/homeicon.png" class="icon"></img></a>
+        <a href="../welcome.php" title="jump to home page"><img src="/subscription-system/images/homeicon.png" class="icon"></img></a>
     </div>
     <div class="wrapper2">
     <h1><b>view and purchase</b></h1>
