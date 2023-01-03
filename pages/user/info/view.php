@@ -57,7 +57,7 @@ function fetchData($tableName, $columns){
         $Orders = array(); // collect the orders in this bill
         
         // before adding orders, we need to get the correct ono
-        $sql = "SELECT count(ono) AS ONUM FROM Orders";
+        $sql = "SELECT MAX(CAST(ono AS UNSIGNED)) FROM Orders";
         if($stmt = mysqli_prepare($link, $sql)){
             mysqli_stmt_execute($stmt);
             mysqli_stmt_store_result($stmt);
@@ -65,6 +65,7 @@ function fetchData($tableName, $columns){
             mysqli_stmt_fetch($stmt);
             mysqli_stmt_close($stmt);
         }
+        // $onum = $onum + 1;
 
         // before adding bills, we need to get the datetime
         $now = "";
@@ -96,6 +97,7 @@ function fetchData($tableName, $columns){
                         // bind variables
                         mysqli_stmt_bind_param($stmt, "sssii", $param_ono, $param_gno, $param_pno, $param_onumber, $param_period);
                         // set parameters
+                        // echo "onum".$onum;
                         $param_ono = $onum + 1;
                         $param_gno = $gno;
                         $param_pno = $row['pno'];
@@ -107,6 +109,8 @@ function fetchData($tableName, $columns){
                             echo "Order added successfully.";
                         }
                         else{
+                            // print error message
+                            echo mysqli_stmt_error($stmt);
                             echo "Something went wrong when try to add order.";
                         }
                         mysqli_stmt_close($stmt);
@@ -121,6 +125,7 @@ function fetchData($tableName, $columns){
                             echo "<br>Bill added succcessfully.<br>";
                         }
                         else{
+                            echo mysqli_stmt_error($stmt);
                             echo "<br>Something went wrong when try to add bill<br>";
                         }
                     }
@@ -128,6 +133,9 @@ function fetchData($tableName, $columns){
             }
             if($change == 1){
                 // jump to the pay page
+                foreach($Orders as $order){
+                    echo $order;
+                }
                 $_SESSION['Orders'] = $Orders;
                 header("location: ../pay/pay.php");
             }
@@ -265,7 +273,6 @@ function fetchData($tableName, $columns){
                 }
                 else{
                     foreach($PaperInfor as $row){
-                    
                         echo "<tr>";
                         echo "<td>".$row['pno']."</td>";
                         echo "<td>".$row['pname']."</td>";

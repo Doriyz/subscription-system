@@ -18,8 +18,6 @@ require_once "../login/config.php";
 ?>
 
 
-
-
 <!DOCTYPE html>
 <html>
   <head>

@@ -195,11 +195,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <style>
         div {
             width: 400px;
+            margin: 0 0;
         }
         body{ font: 14px sans-serif; }
         .wrapper{ 
             width: 400px; 
-            padding: 20px; 
             margin: 0 auto;}
         
         input {
@@ -243,17 +243,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             font-size: 15px;
             color: red;
         }
+        body{
+            padding: 0 0;
+        }
     </style>
     
 </head>
 
   
 <body>
-    <div>
+    <!-- <div> -->
     <!-- add a icon to jump to homepage -->
     <a href="javascript:history.back()" title="return back"><img src="/subscription-system/images/return.png" class="icon"></img></a>
     <a href="../../index.php" title="jump to home page"><img src="/subscription-system/images/homeicon.png" class="icon"></img></a>
-    </div>
+    <!-- </div> -->
 
     <div class="wrapper">
         <h2>Sign Up</h2>

@@ -7,23 +7,49 @@ include "../../../refresh.php";
 if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Include config file
     require_once "../../login/config.php";
+    $param_id = trim($_POST["id"]);
     
-    // Prepare a delete statement
+    // consider the foreign key constraint, we should delete the record in the table which has the foreign key first
+    // get the ono to of the guest
+    $sql = "SELECT ono FROM Orders WHERE gno = ?";
+    $stmt = mysqli_prepare($link, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $param_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+
+    while($row = mysqli_fetch_array($result)){
+        $value = $row['ono'];
+        echo $value;
+
+        // delete the record in the table Bill
+        $sql = "DELETE FROM Bill WHERE ono = ?";
+        $stmt = mysqli_prepare($link, $sql);
+        mysqli_stmt_bind_param($stmt, "i", $value);
+        if(!mysqli_stmt_execute($stmt)){
+            echo mysqli_stmt_error($stmt);
+        }
+        mysqli_stmt_close($stmt);
+    
+        // delete the record in the table Orders
+        $sql = "DELETE FROM Orders WHERE ono = ?";
+        $stmt = mysqli_prepare($link, $sql);
+        mysqli_stmt_bind_param($stmt, "i", $value);
+        if(!mysqli_stmt_execute($stmt)){
+            echo mysqli_stmt_error($stmt);
+        }
+        mysqli_stmt_close($stmt);
+    }
+
     $sql = "DELETE FROM Guest WHERE gno = ?";
-    
     if($stmt = mysqli_prepare($link, $sql)){
-        // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "i", $param_id);
-        
-        // Set parameters
         $param_id = trim($_POST["id"]);
-        
-        // Attempt to execute the prepared statement
+        mysqli_stmt_bind_param($stmt, "i", $param_id);
         if(mysqli_stmt_execute($stmt)){
-            // Records deleted successfully. Redirect to landing page
             header("location: main.php");
             exit();
         } else{
+            echo mysqli_stmt_error($stmt);
             echo "Oops! Something went wrong. Please try again later.";
         }
     }
